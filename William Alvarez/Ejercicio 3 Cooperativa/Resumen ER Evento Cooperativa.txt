@@ -1,25 +1,29 @@
-Ejercicio Evento Academico
+Ejercicio Cooperativa
 
 Entidades
 
-Afiliado(id_afiliado, nombre, direccion, telefono, email)
+Cooperativa(id_cooperativa, nit, nombre)
+Razon_Social(id_razon_social, nombre, descripcion)
+Afiliado(id_afiliado, nombre, direccion, telefono, email, salario)
+Afilacion(id_afiliacion, fecha, numero, valor)
 Oficio(id_oficio, nombre, descripcion)
-Aporte (id_tipoA, codigo, descripcion, cupo_maximo)
-Asistente(id_asistente, numero, nombre, telefono, email)
-Operador()
-Razon_Social()
-Liquidacion()
-Afilacion
-Asesor()
-Novedad()
-Pago()
-Retiro()
+Aporte (id_aporte, codigo, nombre, porcentaje)
+Operador(id_operador, nit, nombre)
+Liquidacion(id_liquidacion, fecha, mes, anio, periodo)
+Asesor(id_asesor, nombre, telefono, email)
+Novedad(id_novedad, nombre, descripcion)
+Novedad_Tipo(id_tipo, codigo, descripcion)
+Pago(id_pago, fecha, pin, valor)
+Retiro(id_retiro, codigo, fecha, motivo)
 
 
 
 
 Relaciones
 
-
+Tener
+pagar
 Realizar
 tener
+Manejar
+Generar

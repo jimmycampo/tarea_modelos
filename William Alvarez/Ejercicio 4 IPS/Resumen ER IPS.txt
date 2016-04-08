@@ -1,0 +1,25 @@
+Ejercicio IPS
+
+Entidades
+
+IPS(id_ips, nit, nombre)
+EPS(id_eps, nit, nombre)
+Especialista(id_especialista, nombre, direccion, telefono, email, especialidad)
+Procedimiento(id_procedimiento, nombre, fecha, valor)
+Procedimiento_Tipo(id_tipo, codigo, descripcion)
+Paciente(id_paciente, nombre, direccion, telefono, email)
+Contrato(id_contrato, fecha_contrato, )
+Factura (id_factura, numero, fecha, valor)
+Factura_Detalle(id_detalle, valor_item, cantidad)
+RIPS(id_rips, codigo, descripcion)
+
+
+
+Relaciones
+
+Tener
+pagar
+Realizar
+tener
+Manejar
+Generar
