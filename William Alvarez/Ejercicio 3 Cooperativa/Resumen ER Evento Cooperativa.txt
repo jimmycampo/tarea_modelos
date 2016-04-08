@@ -1,0 +1,25 @@
+Ejercicio Evento Academico
+
+Entidades
+
+Afiliado(id_afiliado, nombre, direccion, telefono, email)
+Oficio(id_oficio, nombre, descripcion)
+Aporte (id_tipoA, codigo, descripcion, cupo_maximo)
+Asistente(id_asistente, numero, nombre, telefono, email)
+Operador()
+Razon_Social()
+Liquidacion()
+Afilacion
+Asesor()
+Novedad()
+Pago()
+Retiro()
+
+
+
+
+Relaciones
+
+
+Realizar
+tener

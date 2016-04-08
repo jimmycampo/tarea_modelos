@@ -1,0 +1,23 @@
+Ejercicio Hotel
+
+Entidades
+
+Cliente (id_cliente, identificacion, nombres, apellidos, telefono, email)
+Empleado(id_empleado, codigo, nombre)
+Servicio_Especial (id_servicioEspecial,codigo, servicio, costo)
+Alquiler (id_alquiler,fecha_inicial, fecha_final, )
+Reserva (id_reserva, fecha_inicial, fecha_final, cantidad_habitaciones)
+Habitacion (id_habitacion, numero, capacidad,tarifa, fecha_ingreso, fecha_salida)
+Habitacion_Tipo(id_tipoH, nombre, descripcion)
+Factura (id_factura, numero, fecha, valor)
+Factura_Detalle(id_detalle, valor_item, cantidad)
+
+
+Relaciones
+
+Prestar
+Pertenece
+Reservar
+Realizar
+Solicitar
+Facturar

@@ -1,0 +1,16 @@
+Ejercicio Evento Academico
+
+Entidades
+
+Participante (id_participante, numero, nombre, especialidad)
+Actividad (id_actividad, actividad, descripcion)
+Actividad_Tipo (id_tipoA, codigo, descripcion, cupo_maximo)
+Asistente(id_asistente, numero, nombre, telefono, email)
+
+
+Relaciones
+
+
+Realizar
+Abarcar
+Asistir
