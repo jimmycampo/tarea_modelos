@@ -44,3 +44,164 @@ SELECT country.Name, country.SurfaceArea
 FROM country
 WHERE country.Name LIKE '______'
 ORDER BY country.SurfaceArea DESC
+
+/*El país más rico en cada continente*/
+SELECT RESUL.GNP, country.Name,RESUL.Continent 
+FROM 
+(
+	SELECT MAX(country.GNP) GNP,country.Continent 
+	FROM country
+	GROUP BY country.Continent 
+) 
+RESUL INNER JOIN country ON (RESUL.GNP = country.GNP AND RESUL.Continent = country.Continent) 
+ORDER BY RESUL.GNP DESC
+
+/* El país mas pobre de cada continente*/
+SELECT RESUL.GNP, country.Name,RESUL.Continent 
+FROM 
+(
+	SELECT MIN(country.GNP) GNP,country.Continent 
+	FROM country
+	GROUP BY country.Continent 
+) 
+RESUL INNER JOIN country ON (RESUL.GNP = country.GNP AND RESUL.Continent = country.Continent) 
+ORDER BY RESUL.GNP,RESUL.Continent DESC
+
+/*El país más chico de cada continente*/
+SELECT RESUL.SA, country.Name,RESUL.Continent 
+FROM 
+(
+	SELECT MIN(country.SurfaceArea) SA,country.Continent 
+	FROM country
+	GROUP BY country.Continent 
+) 
+RESUL INNER JOIN country ON (RESUL.SA = country.SurfaceArea AND RESUL.Continent = country.Continent) 
+ORDER BY RESUL.SA,RESUL.Continent DESC
+
+/*El país más grande de cada continente*/
+SELECT RESUL.SA, country.Name,RESUL.Continent 
+FROM 
+(
+	SELECT MAX(country.SurfaceArea) SA,country.Continent 
+	FROM country
+	GROUP BY country.Continent 
+) 
+RESUL INNER JOIN country ON (RESUL.SA = country.SurfaceArea AND RESUL.Continent = country.Continent) 
+ORDER BY RESUL.SA,RESUL.Continent DESC
+
+/*Los países con mejor expectativa de vida independizados en el siglo 20*/
+SELECT country.Continent, country.Name, country.LifeExpectancy, country.IndepYear
+FROM country
+WHERE country.IndepYear BETWEEN 1901 AND 2000
+AND country.IndepYear IS NOT NULL
+AND country.LifeExpectancy IS NOT NULL
+ORDER BY country.LifeExpectancy DESC
+
+/*Los países con peor expectativa de vida independizados en el siglo 20*/
+SELECT country.Continent,country.Name, country.LifeExpectancy, country.IndepYear
+FROM country
+WHERE country.IndepYear BETWEEN 1901 AND 2000
+AND country.LifeExpectancy IS NOT NULL
+ORDER BY country.LifeExpectancy ASC
+
+/*Los países con mejor expectativa de vida sin independizarse aun*/
+SELECT country.Continent,country.Name, country.LifeExpectancy, country.IndepYear
+FROM country
+WHERE country.IndepYear IS NULL
+AND country.LifeExpectancy IS NOT NULL
+ORDER BY country.LifeExpectancy DESC
+
+/*Los países, no americanos, con mejor expectativa de vida*/
+SELECT country.Continent,country.Name, country.LifeExpectancy, country.IndepYear
+FROM country
+WHERE country.Continent NOT IN ('North America','South America')
+ORDER BY country.LifeExpectancy DESC
+
+/*Los países que se independizaron en el siglo 20*/
+SELECT country.Continent, country.Name, country.IndepYear
+FROM country
+WHERE country.IndepYear BETWEEN 1901 AND 2000
+ORDER BY country.Name
+
+/*Los países más ricos independizados en el siglo 20*/
+SELECT country.Continent, country.Name, country.GNP,country.IndepYear
+FROM country
+WHERE country.IndepYear BETWEEN 1901 AND 2000
+ORDER BY country.GNP DESC
+
+/*Los países que se independizaron antes de Cristo*/
+SELECT country.Continent, country.Name, country.IndepYear
+FROM country
+WHERE country.IndepYear < 0
+ORDER BY country.Name
+
+/*Los países que se independizaron en un año bisiesto*/
+SELECT country.Continent, country.Name, country.IndepYear
+FROM country
+WHERE (MOD(country.IndepYear,4) = 0)
+OR (MOD(country.IndepYear,100) = 0) 
+AND (MOD(country.IndepYear,400) = 0)
+ORDER BY country.Name
+
+/*Todos los países y la cantidad de años que han transcurrido desde que se independizaron*/
+SELECT country.Continent, country.Name, (YEAR(NOW()) - country.IndepYear ) DIF_YEAR
+FROM country
+WHERE country.IndepYear IS NOT NULL
+ORDER BY DIF_YEAR DESC
+
+/*Los países que se independizaron después de Colombia*/
+SELECT country.Continent, country.Name, country.IndepYear
+FROM country
+WHERE country.IndepYear > 
+(
+	SELECT country.IndepYear
+	FROM country
+	WHERE country.NAME = 'Colombia'
+)
+ORDER BY country.IndepYear ASC
+
+/*Los países que no se han independizado aun (no reportan fecha de independencia)*/
+SELECT country.Continent, country.Name
+FROM country
+WHERE country.IndepYear IS NULL
+ORDER BY country.Continent, country.Name ASC
+
+/*El primer país que se independizó*/
+SELECT country.Continent, country.Name, country.IndepYear
+FROM country
+WHERE country.IndepYear IS NOT NULL
+ORDER BY country.IndepYear ASC
+LIMIT 1
+
+/*El último país que se independizó*/
+SELECT country.Continent, country.Name, country.IndepYear
+FROM country
+WHERE country.IndepYear IS NOT NULL
+ORDER BY country.IndepYear DESC
+LIMIT 1
+
+/*El continente con mas independencias en el siglo 20*/
+SELECT country.Continent, COUNT(country.Name) TOTAL
+FROM country
+WHERE country.IndepYear BETWEEN 1901 AND 2000
+AND country.IndepYear IS NOT NULL
+GROUP BY country.Continent
+ORDER BY country.Continent ASC
+
+/*El primer país en independizarse en cada continente*/
+/*El último país en independizarse en cada continente*/
+
+/*El continente con mas países sin independizarse aun*/
+SELECT country.Continent, COUNT(country.Name) TOTAL
+FROM country
+WHERE country.IndepYear IS NULL
+GROUP BY country.Continent
+ORDER BY country.Continent ASC
+El mejor país del mundo
+
+/*La expectativa de vida promedio de África*/
+SELECT country.Continent, AVG(country.LifeExpectancy) PROMEDIO
+FROM country
+WHERE country.Continent = 'Africa'
+GROUP BY country.Continent
+ORDER BY country.Continent ASC
