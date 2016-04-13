@@ -1,0 +1,62 @@
+Realice una consulta SQL que permita obtener :
+
+Los países mas grandes del mundo
+SELECT 
+   Name as Pais, SurfaceArea as Area
+FROM
+   country
+ORDER BY
+	SurfaceArea DESC
+
+Los 10 países mas grandes del mundo
+SELECT 
+   Name as Pais, SurfaceArea as Area
+FROM
+   country
+ORDER BY
+	SurfaceArea DESC
+LIMIT 10
+
+Los 10 países mas ricos del mundo
+SELECT 
+   Name as Pais, GNP as PIB
+FROM
+   country
+ORDER BY
+	GNP DESC
+LIMIT 10
+
+Los 10 países más ricos con el PIB per Cápita
+SELECT 
+   Name as Pais, GNP/Population as 'PIB per Cápita'
+FROM
+   country
+ORDER BY
+	2 DESC
+LIMIT 10
+
+Los 5 países con mayor expectativa de vida
+SELECT 
+   Name as Pais, LifeExpectancy as 'Expectativa de vida'
+FROM
+   country
+ORDER BY
+	2 DESC
+LIMIT 5
+
+El PIB de cada continente
+SELECT 
+  Continent as Continente, SUM(GNP) AS PIB
+FROM
+  country
+GROUP BY
+  Continent
+
+Los 10 países más pequeños del mundo
+SELECT 
+   Name as Pais, SurfaceArea as 'Area'
+FROM
+   country
+ORDER BY
+	2 
+LIMIT 10
