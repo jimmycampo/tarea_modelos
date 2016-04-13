@@ -1,0 +1,46 @@
+/* Los países mas grandes del mundo */
+SELECT country.Name, country.SurfaceArea 
+FROM country 
+ORDER BY country.SurfaceArea DESC
+
+/* Los 10 países mas grandes del mundo */
+SELECT country.Name, country.SurfaceArea
+FROM country
+ORDER BY country.SurfaceArea DESC
+LIMIT 10
+
+/* Los 10 países mas ricos del mundo */
+SELECT country.Name, country.GNP
+FROM country
+ORDER BY country.GNP DESC
+LIMIT 10
+
+/* Los 10 países mas ricos con el PIB per Capita */
+SELECT country.Name, (country.GNP/country.Population) AS PIB_DIV_POPU
+FROM country
+ORDER BY PIB_DIV_POPU DESC
+LIMIT 10
+
+/*Los 5 países con mayor expectativa de vida*/
+SELECT country.Name, country.LifeExpectancy
+FROM country
+ORDER BY country.LifeExpectancy DESC
+LIMIT 5
+
+/* El PIB de cada continente */
+SELECT SUM(country.GNP) PIB_CON, country.Continent
+FROM country
+GROUP BY country.Continent
+ORDER BY PIB_CON DESC
+
+/* Los 10 países más pequeños del mundo */
+SELECT country.Name, country.SurfaceArea
+FROM country
+ORDER BY country.SurfaceArea ASC
+LIMIT 10
+
+/*Los países mas grandes del mundo con nombre de 6 letras */
+SELECT country.Name, country.SurfaceArea
+FROM country
+WHERE country.Name LIKE '______'
+ORDER BY country.SurfaceArea DESC
