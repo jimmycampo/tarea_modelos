@@ -189,7 +189,23 @@ GROUP BY country.Continent
 ORDER BY country.Continent ASC
 
 /*El primer país en independizarse en cada continente*/
+SELECT country.Name, RESUL.IYEAR, RESUL.Continent
+FROM(
+SELECT MIN(country.IndepYear) IYEAR, country.Continent
+FROM country
+WHERE country.IndepYear IS NOT NULL
+GROUP BY country.Continent)
+RESUL INNER JOIN country ON (country.IndepYear = RESUL.IYEAR AND country.Continent = RESUL.Continent)
+
 /*El último país en independizarse en cada continente*/
+SELECT country.Name, RESUL.IYEAR, RESUL.Continent
+FROM(
+SELECT MAX(country.IndepYear) IYEAR, country.Continent
+FROM country
+WHERE country.IndepYear IS NOT NULL
+GROUP BY country.Continent)
+RESUL INNER JOIN country ON (country.IndepYear = RESUL.IYEAR AND country.Continent = RESUL.Continent)
+
 
 /*El continente con mas países sin independizarse aun*/
 SELECT country.Continent, COUNT(country.Name) TOTAL
