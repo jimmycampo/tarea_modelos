@@ -221,3 +221,49 @@ FROM country
 WHERE country.Continent = 'Africa'
 GROUP BY country.Continent
 ORDER BY country.Continent ASC
+
+/*La fecha promedio de la independencia de los países en América del Sur*/
+SELECT AVG(country.IndepYear) PIYEAR, country.Continent
+FROM country
+WHERE country.IndepYear IS NOT NULL
+AND country.Continent = 'South America'
+GROUP BY country.Continent
+
+/*Los primeros 10 países en independizarse*/
+SELECT country.IndepYear, country.Name, country.Continent
+FROM country
+WHERE country.IndepYear IS NOT NULL
+ORDER BY country.IndepYear ASC
+LIMIT 10
+
+/*La expectativa de vida promedio de cada continente*/
+SELECT AVG(country.LifeExpectancy) PLE, country.Continent
+FROM country
+WHERE country.LifeExpectancy IS NOT NULL
+GROUP BY country.Continent
+ORDER BY PLE DESC
+
+/*La expectativa de vida promedio de cada continente con la diferencia en años respecto a la mayor expectativa*/
+SELECT ((
+SELECT AVG(country.LifeExpectancy) PLE
+FROM country
+WHERE country.LifeExpectancy IS NOT NULL
+GROUP BY country.Continent
+ORDER BY PLE DESC
+LIMIT 1)-AVG(country.LifeExpectancy)) DIFERENCIA ,AVG(country.LifeExpectancy) PROMEDIO, Continent
+FROM country
+WHERE country.LifeExpectancy IS NOT NULL
+GROUP BY country.Continent
+ORDER BY PROMEDIO DESC
+
+/*Cada continente con la cantidad de países que posee ordenados de mayor a menor*/
+SELECT COUNT(country.Name) SUMA, country.Continent
+FROM country
+GROUP BY Continent
+ORDER BY SUMA DESC
+
+/*Cada continente con el porcentaje de población del mundo que le corresponde*/
+SELECT SUM(country.Population), ((SUM(country.Population)*100)/(SELECT SUM(country.Population)
+FROM country)), country.Continent
+FROM country
+GROUP BY country.Continent
