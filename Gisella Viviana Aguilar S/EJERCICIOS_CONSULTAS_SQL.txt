@@ -1,0 +1,341 @@
+Los países mas grandes del mundo
+
+SELECT `country`.`Name`, `country`.`SurfaceArea`
+FROM `country`
+ORDER BY `country`.`SurfaceArea` DESC
+
+SELECT `country`.`Name`AS "LOS PAISES MAS GRANDES DEL MUNDO"
+FROM `country`
+ORDER BY `country`.`SurfaceArea` DESC
+______________________________________________________________________________________
+
+Los 10 países mas grandes del mundo
+
+SELECT  `country`.`Name`, `country`.`SurfaceArea`
+FROM `country`
+ORDER BY `country`.`SurfaceArea` DESC
+LIMIT 0,10
+
+SELECT `country`.`Name`AS "LOS 10 PAISES MAS GRANDES DEL MUNDO"
+FROM `country`
+ORDER BY `country`.`SurfaceArea` DESC
+LIMIT 0,10
+
+______________________________________________________________________________________
+
+Los 10 países mas ricos del mundo
+
+SELECT `country`.`Name`AS "LOS 10 PAISES MAS RICOS DEL MUNDO"
+FROM `country`
+ORDER BY `country`.`GNP` DESC
+LIMIT 0,10
+
+SELECT Name AS "LOS 10 PAISES MAS RICOS DEL MUNDO"
+FROM country
+ORDER BY GNP DESC
+LIMIT 0,10
+
+_____________________________________________________________________________________
+
+Los 10 países más ricos con el PIB per Cápita
+
+SELECT Name , GNP/ Population AS "PIB PER CAPITA"
+FROM country
+ORDER BY GNP/ Population DESC
+LIMIT 0,10
+
+____________________________________________________________________________________
+
+Los 5 países con mayor expectativa de vida
+
+SELECT Name , LifeExpectancy
+FROM country
+ORDER BY LifeExpectancy DESC
+LIMIT 0,5
+
+____________________________________________________________________________________
+
+El PIB de cada continente
+
+SELECT DISTINCT 
+  `country`.`Continent`, `country`.`GNP`
+FROM
+  `country`
+
+SELECT DISTINCT 
+  `country`.`Continent`, (select sum(GNP) from country) as PIB
+FROM
+  `country`
+
+___________________________________________________________________________________
+
+Los 10 países más pequeños del mundo
+
+SELECT  `country`.`Name`, `country`.`SurfaceArea`
+FROM `country`
+ORDER BY `country`.`SurfaceArea` 
+LIMIT 0,10
+
+___________________________________________________________________________________
+
+Los países mas grandes del mundo con nombre de 6 letras 
+SELECT `country`.`Name`, `country`.`SurfaceArea`
+FROM `country`
+WHERE
+  `country`.`Name` LIKE "______"
+ORDER BY `country`.`SurfaceArea` DESC
+
+____________________________________________________________________________________
+
+El país más rico en cada continente
+
+SELECT `Name`,`Continent`, `GNP`
+FROM country
+WHERE
+`GNP`= (SELECT MAX (country.GNP) FROM country)
+
+____________________________________________________________________________________
+
+Los países con mejor expectativa de vida independizados en el siglo 20
+
+SELECT 
+  `country`.`Name`,
+  `country`.`LifeExpectancy`
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` BETWEEN 1901 AND 2000
+ORDER BY
+  `country`.`LifeExpectancy` DESC
+
+____________________________________________________________________________________
+
+Los países con peor expectativa de vida independizados en el siglo 20
+
+SELECT 
+  `country`.`Name`,
+  `country`.`LifeExpectancy`
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` BETWEEN 1901 AND 2000
+ORDER BY
+  `country`.`LifeExpectancy`
+
+____________________________________________________________________________________
+
+Los países con mejor expectativa de vida sin independizarse aun
+
+SELECT 
+  `country`.`Name`,
+  `country`.`LifeExpectancy`
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` IS NULL
+ORDER BY
+  `country`.`LifeExpectancy` DESC
+____________________________________________________________________________________
+
+Los países, no americanos, con mejor expectativa de vida
+
+SELECT 
+  `country`.`Name`,
+  `country`.`LifeExpectancy`,  `country`.`Continent`
+FROM
+  `country`
+WHERE
+  `country`.`Continent` != "North America" AND `country`.`Continent` != "South America"
+ORDER BY
+  `country`.`LifeExpectancy` DESC
+
+_____________________________________________________________________________________
+
+Los países que se independizaron en el siglo 20
+
+SELECT 
+  `country`.`Name` AS "Paises independizados en siglo XX"
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` BETWEEN 1901 AND 2000
+_____________________________________________________________________________________
+
+Los países más ricos independizados en el siglo 20
+
+SELECT 
+  `country`.`Name`,
+  `country`.`GNP`
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` BETWEEN 1901 AND 2000
+ORDER BY
+  `country`.`GNP` DESC
+
+______________________________________________________________________________________
+
+Los países que se independizaron antes de Cristo
+
+SELECT 
+  `country`.`Name` , `country`.`IndepYear`
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` < 0
+ORDER BY
+  `country`.`Name` 
+______________________________________________________________________________________
+
+Los países que se independizaron en un año bisiesto
+
+SELECT 
+  `country`.`Name` AS "Paises independizados en año bisiesto", `country`.`IndepYear`
+FROM
+  `country`
+WHERE
+(MOD(`country`.`IndepYear`,4) = 0)  
+ORDER BY `country`.`IndepYear`  DESC
+
+______________________________________________________________________________________
+
+Todos los países y la cantidad de años que han transcurrido desde que se independizaron
+
+SELECT `country`.`Name`,`country`.`Continent`,
+(YEAR(NOW()) - `country`.`IndepYear`) AS "AÑOS DE INDEPENDECIA"
+FROM country
+WHERE `country`.`IndepYear`IS NOT NULL
+ORDER BY `IndepYear`DESC
+
+_____________________________________________________________________________________
+
+El primer país que se independizó
+
+SELECT `country`.`Continent`, `country`.`Name`, `country`.`IndepYear`
+FROM `country`
+WHERE `country`.`IndepYear`IS NOT NULL
+ORDER BY `country`.`IndepYear` ASC
+LIMIT 1
+
+___________________________________________________________________________________
+
+El último país que se independizó
+
+SELECT `country`.`Continent`, `country`.`Name`, `country`.`IndepYear`
+FROM `country`
+WHERE `country`.`IndepYear`IS NOT NULL
+ORDER BY `country`.`IndepYear` DESC
+LIMIT 1
+
+__________________________________________________________________________________
+
+El continente con mas independencias en el siglo 20
+
+SELECT `country`.`Continent`, COUNT(`country`.`Continent`) AS "MAS INDEPENDENCIAS"
+FROM `country`
+WHERE `country`.`IndepYear` BETWEEN 1901 AND 2000
+AND `country`.`IndepYear` IS NOT NULL
+GROUP BY `country`.`Continent`
+ORDER BY `country`.`Continent` 
+LIMIT 1
+
+__________________________________________________________________________________
+
+El primer país en independizarse en cada continente
+
+SELECT `country`.`Continent`, `country`.`Name`, `country`.`IndepYear`
+FROM `country`
+WHERE `country`.`IndepYear`IS NOT NULL
+GROUP BY `country`.`Continent`
+ORDER BY `country`.`Continent`
+
+___________________________________________________________________________________
+
+La expectativa de vida promedio de África
+
+SELECT `country`.`Continent`, AVG(`country`.`LifeExpectancy`) AS "PROMEDIO DE VIDA" 
+FROM `country`
+WHERE `country`.`Continent` = "AFRICA"
+GROUP BY `country`.`Continent`
+ORDER BY `country`.`Continent`
+
+___________________________________________________________________________________
+
+La fecha promedio de la independencia de los países en América del Sur
+
+SELECT `country`.`Name`,`country`.`Continent`, AVG(`country`.`IndepYear`) AS "PROMEDIO" 
+FROM `country`
+WHERE `country`.`Continent` = "SOUTH AMERICA"
+ORDER BY `country`.`Continent`
+
+___________________________________________________________________________________
+
+Los primeros 10 países en independizarse
+
+SELECT 
+  `country`.`Name` , `country`.`IndepYear`
+FROM
+  `country`
+WHERE `country`.`IndepYear`IS NOT NULL
+ORDER BY
+  `country`.`IndepYear`
+LIMIT 0,10
+
+_____________________________________________________________________________________
+
+La expectativa de vida promedio de cada continente
+
+SELECT `country`.`Continent`, AVG(`country`.`LifeExpectancy`) AS "PROMEDIO DE VIDA" 
+FROM `country`
+WHERE `country`.`LifeExpectancy`IS NOT NULL
+GROUP BY `country`.`Continent`
+ORDER BY `country`.`Continent`
+
+___________________________________________________________________________________
+
+La expectativa de vida promedio de cada continente con la diferencia en años respecto a la 
+mayor expectativa
+___________________________________________________________________________________
+
+Cada continente con la cantidad de países que posee ordenados de mayor a menor
+
+SELECT `country`.`Continent`, COUNT(`country`.`Name`) AS "CANTIDAD"
+FROM `country`
+GROUP BY `country`.`Continent`
+ORDER BY COUNT(`country`.`Name`) DESC
+
+____________________________________________________________________________________
+
+Cada continente con el porcentaje de población del mundo que le corresponde
+
+SELECT `country`.`Continent`, AVG(`country`.`Population`) AS "PORCENTAJE"
+FROM `country`
+GROUP BY `country`.`Continent`
+ORDER BY COUNT(`country`.`Population`) DESC
+
+___________________________________________________________________________________
+
+El tamaño de cada continente ordenados de mayor a menor
+
+SELECT `country`.`Continent`, SUM(`country`.`SurfaceArea`)AS "TAMAÑO"
+FROM `country`
+GROUP BY `country`.`Continent`
+ORDER BY SUM(`country`.`SurfaceArea`) DESC
+
+___________________________________________________________________________________
+
+Todos los países con sus capitales (si no tiene mostrar "no registra")
+
+___________________________________________________________________________________
+
+Los países donde se hable más de 2 idiomas oficiales
+
+SELECT country.Name,countrylanguage.CountryCode, COUNT(countrylanguage.IsOfficial) AS "2 OFICIALES"
+FROM country,countrylanguage
+HAVING COUNT(countrylanguage.IsOfficial)="T" AND (COUNT(countrylanguage.IsOfficial)="T")=2
+ORDER BY CountryCode DESC
+
+___________________________________________________________________________________
+Los 5 idiomas más hablados en el mundo
+Las ciudades sin capital
+
