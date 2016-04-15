@@ -267,3 +267,30 @@ SELECT SUM(country.Population), ((SUM(country.Population)*100)/(SELECT SUM(count
 FROM country)), country.Continent
 FROM country
 GROUP BY country.Continent
+
+/*El tamaño de cada continente ordenados de mayor a menor*/
+SELECT SUM(country.SurfaceArea) TAMAÑO, country.Continent
+FROM country
+GROUP BY country.Continent
+ORDER BY TAMAÑO DESC
+
+/*Todos los países con sus capitales (si no tiene mostrar "no registra")*/
+SELECT country.Name, CASE WHEN (city.Name IS NULL) THEN 'NO REGISTRA' ELSE city.Name END
+FROM country LEFT JOIN city ON (country.Capital = city.ID)
+
+/*Los países cuya capital tenga una población de mas de 1 millón de habitantes*/
+SELECT country.Name, CASE WHEN (city.Name IS NULL) THEN 'NO REGISTRA' ELSE city.Name END, city.Population
+FROM country LEFT JOIN city ON (country.Capital = city.ID)
+HAVING city.Population >= 1000000
+
+/*Los países donde se hable más de 2 idiomas oficiales*/
+
+Los 5 idiomas más hablados en el mundo
+Las ciudades sin capital
+Las ciudades capitales donde se hablen mas de 2 idiomas
+Las ciudades mas pobladas de África y Europa
+La ciudad más poblada del mundo y la menos poblada del mundo
+La población sumada de toda sur-américa excepto brasil y además, la población de brasil
+Todas los países con sus capitales y los idiomas que hablan ordenados alfabéticamente
+Todas los países con sus capitales y la cantidad de idiomas que hablan
+Todos los países donde el ingles es el idioma oficial 
