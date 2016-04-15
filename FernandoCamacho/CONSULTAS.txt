@@ -1,0 +1,55 @@
+1.Los países mas grandes del mundo
+SELECT  `country`.`Name` ,  `country`.`surfacearea` 
+FROM  `country` 
+ORDER BY  `country`.`surfacearea` DESC 
+2.Los 10 países mas grandes del mundo
+SELECT  `country`.`Name` ,  `country`.`surfacearea` 
+FROM  `country` 
+ORDER BY  `country`.`surfacearea` DESC LIMIT 10
+3.Los 10 países mas ricos del mundo
+SELECT  `country`.`Name` ,  `country`.`GNP` 
+FROM  `country` 
+ORDER BY  `country`.`GNP` DESC LIMIT 10
+4.Los 10 países mas ricos con el PIB percapita
+SELECT  `country`.`Name` ,  `country`.`GNPOLD` 
+FROM  `country` 
+ORDER BY  `country`.`GNPOLD` DESC LIMIT 10
+5.Los 5 países con mayor expectativa de vida
+SELECT  `country`.`Name` ,  `country`.`lifeexpectancy` 
+FROM  `country` 
+ORDER BY  `country`.`lifeexpectancy` DESC LIMIT 5
+6.El PIB de cada continente
+SELECT  `country`.`continent` ,  `country`.`GNP` 
+FROM  `country` 
+7.Los 10 países más pequeños del mundo
+SELECT  `country`.`name` ,  `country`.`surfacearea` 
+FROM  `country` 
+ORDER BY  `country`.`surfacearea` ASC 
+LIMIT 10
+
+////////////////////////////////////////////////////////////////////////
+
+1.Los países mas grandes del mundo con nombre de 6 letras
+SELECT  `country`.`Name` 
+FROM  `country` 
+WHERE  `country`.`Name` LIKE  '______'
+2.El país más rico en cada continente.
+SELECT DISTINCT  `country`.`Continent` ,  `country`.`name` ,  `country`.`GNP` 
+FROM  `country` 
+ORDER BY  `country`.`GNP` DESC 
+LIMIT 0 , 30
+3.El país mas pobre de cada continente
+SELECT DISTINCT  `country`.`Continent` ,  `country`.`name` ,  `country`.`GNP` 
+FROM  `country` 
+ORDER BY  `country`.`GNP` ASC 
+4.El país mas chico de cada continentte
+SELECT DISTINCT  `country`.`Continent` ,  `country`.`name` ,  `country`.`surfacearea` 
+FROM  `country` 
+ORDER BY  `country`.`surfacearea` ASC
+5.El país mas grande de cada continente
+SELECT DISTINCT  `country`.`Continent` ,  `country`.`name` ,  `country`.`surfacearea` 
+FROM  `country` 
+ORDER BY  `country`.`surfacearea` DESC
+6. Países con mejor expectativa de vida independizados en el siglo 20
+
+
