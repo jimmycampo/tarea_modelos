@@ -1,0 +1,439 @@
+﻿/* 1. Los países mas grandes del mundo */
+( SELECT 
+`country`.`Name`, 
+`country`.`Population` 
+FROM `country` 
+ORDER BY 
+`country`.`Population` 
+DESC  )
+
+/* 2. Los 10 países mas grandes del mundo*/
+
+( SELECT 
+`country`.`Name`, 
+`country`.`Population` 
+FROM `country` 
+ORDER BY 
+`country`.`Population` 
+DESC LIMIT 10)
+
+/* 3.Los 10 países mas ricos del mundo*/
+
+SELECT 
+`Name `as `Pais`, 
+`GNP` as `PIB `
+FROM `country`
+ ORDER BY 
+`GNP`
+ DESC LIMIT 10
+
+ /* 4.Los 10 países más ricos con el PIB per Cápita*/
+
+SELECT 
+`Name` as `Pais`, 
+`GNP/Population` as 'PIB per Cápita' 
+FROM `country` 
+ORDER BY 2 DESC 
+
+/* 5. Los 5 países con mayor expectativa de vida*/
+
+(SELECT 
+`country`.`Name`,
+ `country`.`LifeExpectancy`
+ FROM `country` 
+ORDER BY 
+`country`.`LifeExpectancy` 
+DESC LIMIT 5 )
+
+/* 6.El PIB de cada continente */
+
+SELECT 
+ `Continent ` as  `Continente `, 
+SUM(GNP) AS PIB 
+FROM  `country `
+GROUP BY  `Continent `
+
+/* 7. Los 10 países más pequeños del mundo */
+
+SELECT 
+`name ` as `Pais`, 
+`SurfaceArea `as 'Area' 
+FROM `country `
+ORDER BY 2 LIMIT 10
+
+/* 8. Los países mas grandes del mundo con nombre de 6 letras */
+
+SELECT 
+`country`.`Name` 
+FROM `country` 
+WHERE 
+`country`.`Name` LIKE '______'
+
+/* 9.El país más rico en cada continente*/
+
+SELECT `name`as `pais`,
+GNP/continent as 'PIB per Cápita' 
+FROM country
+ORDER BY 2 DESC LIMIT 1
+
+/* 10.El país más chico de cada continente*/
+
+SELECT 
+RESUL.SA, 
+country.Name,
+RESUL.Continent 
+FROM
+( SELECT MIN(country.SurfaceArea) SA,
+country.Continent 
+FROM country 
+GROUP BY 
+country.Continent )RESUL 
+INNER JOIN country ON(RESUL.SA = country.SurfaceArea AND RESUL.Continent = country.Continent)
+ORDER BY 
+RESUL.SA,
+RESUL.Continent 
+DESC
+
+/*11.El país más grande de cada continente*/
+
+SELECT DISTINCT 
+`country`.`Continent` 
+FROM `country` 
+ORDER BY 
+`country`.`Continent` 
+ASC
+
+/*12.Los países con mejor expectativa de vida independizados en el siglo 20 */
+
+SELECT 
+country.Continent, 
+country.Name, 
+country.LifeExpectancy, 
+country.IndepYear 
+FROM country 
+WHERE 
+country.IndepYear BETWEEN 1901 AND 2000 AND 
+country.IndepYear IS NOT NULL ANDcountry.LifeExpectancy IS NOT NULL 
+ORDER BY
+country.LifeExpectancy 
+DESC
+
+/* 13.Los países con peor expectativa de vida independizados en el siglo 20*/
+
+SELECT
+country.Continent,country.Name, 
+country.LifeExpectancy, 
+country.IndepYear
+FROM country
+WHERE 
+country.IndepYear BETWEEN 1901 AND 2000 AND 
+country.LifeExpectancy IS NOT NULL
+ORDER BY
+country.LifeExpectancy 
+ASC
+
+/*14.Los países con mejor expectativa de vida sin independizarse */
+
+SELECT
+ country.Continent, 
+COUNT(country.Name) TOTAL 
+FROM country SELECT country.Continent,
+country.Name, 
+country.LifeExpectancy, 
+country.IndepYear
+ FROM country 
+WHERE country.Continent NOT IN ('North América','South America') 
+ORDER BY
+country.LifeExpectancy DESCtry 
+WHERE country.IndepYear IS NULL 
+GROUP BY country.Continent 
+ORDER BY country.Continent
+ ASC
+
+/*15.	Los países, no americanos, con mejor expectativa de vida*/
+SELECT 
+country.Continent,
+country.Name,
+ country.LifeExpectancy, country.IndepYear 
+FROM country 
+WHERE country.Continent NOT IN ('North America','South America')
+ ORDER BY
+country.LifeExpectancy 
+DESC
+/*16.Los países que se independizaron en el siglo 20*/
+SELECT 
+country.Continent,
+ country.Name, country.IndepYear 
+FROM country 
+WHERE 
+country.IndepYear BETWEEN 1901 AND 2000 
+ORDER BY 
+country.Name
+
+/*17.Los países más ricos independizados en el siglo 20 */
+
+SELECT 
+country.Continent,
+country.Name, 
+country.GNP,
+country.IndepYear 
+FROM country 
+WHERE 
+country.IndepYear BETWEEN 1901 AND 2000 
+ORDER BY
+ country.GNP 
+DESC
+/* 18.Los países que se independizaron antes de Cristo*/
+
+SELECT
+ country.Continent,
+ country.Name,
+ country.IndepYear
+ FROM country
+ WHERE country.IndepYear < 0 
+ ORDER BY 
+ country.Name
+/* 19.Los países que se independizaron en un año bisiesto*/
+
+SELECT
+country.Continent, 
+country.Name, country.IndepYear 
+FROM country 
+WHERE (MOD(country.IndepYear,4) = 0) OR (MOD(country.IndepYear,100) = 0) AND (MOD(country.IndepYear,400) =0) 
+ORDER BY 
+country.Name
+
+/*20.Todos los países y la cantidad de años que han transcurrido desde que se independizaron*/
+
+SELECT 
+country.Continent, country.Name, 
+(YEAR(NOW()) - country.IndepYear ) DIF_YEAR 
+FROM country 
+WHERE country.IndepYear IS NOT NULL 
+ORDER BY DIF_YEAR 
+DESC
+
+/*21.Los países que se independizaron después de Colombia*/
+
+SELECT
+ country.Continent, 
+country.Name, country.IndepYear 
+FROM country 
+WHERE
+country.IndepYear > ( SELECT country.IndepYear FROM country WHERE country.NAME = 'Colombia' )
+ORDERBY 
+country.IndepYear 
+ASC
+/*22.	Los países que no se han independizado aun (no reportan fecha de independencia)*/
+
+SELECT country.Continent, country.Name 
+FROM country
+WHERE country.IndepYear IS NULL 
+ORDER BY country.Continent, country.Name 
+ASC
+
+/*23.El primer país que se independizó*/
+
+SELECT
+ country.Continent, country.Name, country.IndepYear 
+FROM country 
+WHERE country.IndepYear IS NOT NULL 
+ORDER BY country.IndepYear 
+ASC LIMIT 1
+
+/*24.El último país que se independizó*/
+
+SELECT country.Continent, country.Name, country.IndepYear 
+FROM country
+ WHERE country.IndepYear IS NOT NULL 
+ORDER BY country.IndepYear
+DESC LIMIT 1
+
+/* 25.El continente con mas independencias en el siglo 20*/
+
+SELECT 
+country.Continent, COUNT(country.Name) TOTAL 
+FROM country 
+WHERE country.IndepYear BETWEEN 1901 AND 2000 AND country.IndepYear IS NOT NULL 
+GROUP BY country.Continent
+ORDERBY country.Continent ASC
+
+/*26.El primer país en independizarse en cada continente*/
+
+SELECT 
+country.Name, RESUL.IYEAR, RESUL.Continent 
+FROM( SELECT MIN(country.IndepYear) IYEAR, 
+country.Continent FROM country 
+WHERE country.IndepYear IS NOT NULL GROUP BYcountry.Continent) RESUL 
+INNER JOIN country ON (country.IndepYear = RESUL.IYEAR AND country.Continent = RESUL.Continent)
+LIMIT 1
+
+/*27.	El último país en independizarse en cada continente*/
+
+SELECT country.Name, RESUL.IYEAR, RESUL.Continent 
+FROM ( SELECT MAX(country.IndepYear) IYEAR, country.Continent 
+FROM country WHERE country.IndepYear IS NOT NULL
+GROUP BYcountry.Continent) RESUL 
+INNER JOIN country ON (country.IndepYear = RESUL.IYEAR AND country.Continent = RESUL.Continent) 
+limit 1
+
+/*28. El continente con mas países sin independizarse aun*/
+
+SELECT country.Continent, COUNT(country.Name) TOTAL 
+FROM country
+WHERE country.IndepYear IS NULL
+GROUP BY country.Continent 
+ORDER BY country.Continent 
+ASC
+
+/*31.La expectativa de vida promedio de África*/
+
+SELECT `country`.`Continent`, ROUND(AVG(`country`.`LifeExpectancy`)) AS `promedio` 
+FROM `country` 
+WHERE `country`.`Continent` IN ('AFRICA') 
+GROUP BY country.Continent HAVING promedio 
+ORDER BY 2 DESC
+
+/*34.La expectativa de vida promedio de cada continente*/
+
+SELECT `country`.`Continent`, ROUND(AVG(`country`.`LifeExpectancy`)) AS `promedio` 
+FROM `country`
+WHERE `country`.`Continent` 
+GROUP BY `country`.`Continent` HAVING promedio 
+ORDERBY 2 DESC
+/*35.La expectativa de vida promedio de cada continente con la diferencia en años respecto a la mayor expectativa*/
+
+SELECT 
+`country`.`Continent`,
+ AVG(`country`.`Population`) AS "promedio" 
+FROM `country` 
+GROUP BY `country`.`Continent` HAVING SUM(`country`.`IndepYear`) >"Expectativa" 
+ORDER BY 2DESC
+
+/*36.Cada continente con la cantidad de países que posee ordenados de mayor a menor*/
+
+/*a*/	SELECT `country`.`Population`, 
+       Count( `country`.`Population`) AS `Población Mundial`, 
+      ((Count(`country`.`Population`) * 100) / (select count(*) from `country`)) 
+     FROM `country`
+     GROUP BY`country`.`Population` 
+
+/*b*/  SELECT DISTINCT
+ `country`.`Continent`,
+ SUM( `country`.`Continent`) AS `Población Mundial`, 
+((Count(`country`.`Population`) * 100) / (select count(`country`.`Continent`) from`country`)) 
+ FROM `country`
+ GROUP BY
+ `country`.`Population`,
+ `country`.`Continent`
+
+/*38.El tamaño de cada continente ordenados de mayor a menor*/
+
+SELECT 
+Name, 
+UPPER(Continent),
+Population, surfacearea, 
+ROUND(Population / SurfaceArea) as "Hab x Km2" 
+FROM country 
+ORDER BY 5 DESC
+
+/*40.Los países cuya capital tenga una población de mas de 1 millón de habitantes*/
+SELECT DISTINCT 
+`country`.`Continent`, 
+SUM(`country`.`Population`) AS `paises` 
+FROM `country` 
+GROUP BY 
+`country`.`Continent` HAVING SUM(`country`.`Population`) > 1000000 
+ORDER BY`paises` DESC
+
+/*42.Los 5 idiomas más hablados en el mundo*/
+SELECT 
+`countrylanguage`.`Language`, 
+COUNT(`countrylanguage`.`Language`) AS "idioma"
+ FROM `countrylanguage`
+ GROUP BY `countrylanguage`.`Language` 
+ORDER BY 2 DESC LIMIT 5
+
+/*45.Las ciudades mas pobladas de África y Europa*/
+
+SELECT DISTINCT 
+`country`.`Continent`, 
+`city`.`Population`
+ FROM `city`,`country`
+ WHERE `country`.`Population` IN ("EUROPA", "AFRICA")
+ ORDER BY 
+`country`.`Continent`
+ ASC
+
+/*46.La ciudad más poblada del mundo y la menos poblada del mundo*/
+
+(SELECT 
+`city`.`Name`, 
+`city`.`Population` 
+FROM `city` 
+ORDER BY `city`.`Population` DESC LIMIT 5 ) 
+UNION ALL 
+( SELECT `city`.`Name`, 
+`city`.`Population`
+ FROM `city` 
+ORDER BY
+`city`.`Population`
+ LIMIT 5 ) 
+ORDER BY 2 DESC
+
+/*47.La población sumada de toda sur-américa excepto brasil y además, la población de Brasil*/
+
+SELECT 
+`country`.`Continent`, 
+SUM(`country`.`Population`) AS `sur america` 
+FROM `country`
+ WHERE `country`.`Population` NOT IN ('BRASIL') 
+GROUP BY 
+`country`.`Population` 
+ORDER BY2 DESC
+
+/*48.Todas los países con sus capitales y los idiomas que hablan ordenados alfabéticamente*/
+SELECT 
+`country`.`Name` AS `Pais`, 
+`countrylanguage`.`Language` AS `Idioma` 
+FROM `countrylanguage` 
+INNER JOIN `country` ON (`countrylanguage`.`CountryCode` = `country`.`Code`)
+ORDER BY `Pais`, `Idioma`
+
+/*49.Todas los países con sus capitales y la cantidad de idiomas que hablan*/
+
+SELECT 
+`country`.`Name` AS `Pais`, 
+`countrylanguage`.`Language` AS `Idioma` 
+FROM `countrylanguage` INNER JOIN `country` ON (`countrylanguage`.`CountryCode` = `country`.`Code`)
+ORDER BY `Pais`, `Idioma`
+
+/*50.Todos los países donde el ingles es el idioma oficial */
+
+SELECT 
+`countrylanguage`.`Language`,
+ `country`.`Name` 
+FROM `countrylanguage`, `country`
+WHERE `countrylanguage`.`Language` = "INGLES"
+ ORDER BY 
+`countrylanguage`.`Language`,`country`.`Name`
+ DESC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
