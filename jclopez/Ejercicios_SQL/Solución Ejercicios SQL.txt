@@ -197,3 +197,19 @@ FROM
 WHERE
   `countrylanguage`.`IsOfficial` = 'T'
   AND `countrylanguage`.`Language` ='English'
+
+
+La ciudad más poblada del mundo y la menos poblada del mundo
+(SELECT  
+ `city`.`Name` 'PAIS',  
+ `city`.`Population` 'POBLACION'  
+ FROM `city`  
+ ORDER BY `city`.`Population` DESC LIMIT 25 )  
+ UNION ALL  
+ ( SELECT `city`.`Name` 'PAIS',  
+ `city`.`Population` 'POBLACION'
+  FROM `city`  
+ ORDER BY 
+ `city`.`Population` 
+  LIMIT 25 )  
+ ORDER BY 2 DESC 
