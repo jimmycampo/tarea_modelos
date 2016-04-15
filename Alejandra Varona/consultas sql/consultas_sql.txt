@@ -1,0 +1,103 @@
+1.
+SELECT 
+  `country`.`Name`,
+  `country`.`SurfaceArea`
+ FROM  `country`
+ORDER BY  `SurfaceArea`   DESC LIMIT 1
+
+2.
+SELECT 
+  `country`.`Name`,
+  `country`.`SurfaceArea`
+FROM
+  `country`
+  ORDER BY `country`.`SurfaceArea` DESC LIMIT 10
+3.
+SELECT 
+  `country`.`Name`,
+  `country`.`GNPOld`
+FROM
+  `country`
+  ORDER BY `country`.`GNPOld` DESC LIMIT 10
+5.
+SELECT 
+  `country`.`Name`,
+  `country`.`LifeExpectancy`
+FROM
+  `country`
+  ORDER BY `country`.`LifeExpectancy` DESC LIMIT 5
+7.
+SELECT 
+  `country`.`Name`,
+  `country`.`SurfaceArea`
+FROM
+  `country`
+  ORDER BY `country`.`SurfaceArea` ASC LIMIT 10
+
+8.
+SELECT 
+  `country`.`Name`,
+  `country`.`SurfaceArea`
+FROM
+  `country`
+  WHERE
+  `country`.`Name` LIKE '______'
+
+  ORDER BY `country`.`SurfaceArea` DESC LIMIT 10
+16.
+SELECT 
+  `country`.`Name`,
+  ROUND(AVG(`country`.`LifeExpectancy`)) AS `Expectativa`
+FROM
+  `country`
+WHERE
+  `country`.`Continent` NOT IN ('North America','South America')
+GROUP BY
+  country.Continent
+HAVING Expectativa > 65
+ORDER BY 2 DESC
+17.
+SELECT 
+   `country`.`Name`,
+  `country`.`IndepYear`
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` BETWEEN 1900 AND 1999
+ORDER BY
+  `country`.`IndepYear`
+18. 
+SELECT 
+   `country`.`Name`,
+  `country`.`IndepYear`,
+    `country`.`GNPOld`
+FROM
+  `country`
+WHERE
+  `country`.`IndepYear` BETWEEN 1900 AND 1999
+ORDER BY 
+  `country`.`GNPOld` DESC
+24.
+SELECT `country`.`Name`, `country`.`IndepYear` FROM `country` WHERE `country`.`IndepYear` IS NOT NULL ORDER BY `country`.`IndepYear` ASC LIMIT 1
+25.
+SELECT `country`.`Name`, `country`.`IndepYear` 
+FROM `country` 
+ORDER BY `country`.`IndepYear` DESC LIMIT 1
+
+32.  //falta calcular promedio espectativa de vida
+SELECT 
+  `country`.`Name`,
+  `country`.`LifeExpectancy`
+FROM
+  `country`
+WHERE
+  `country`.`Continent` NOT IN ('Europa','Antarctica','Oceania','Asia','North America','South America')
+
+ORDER BY `Name`
+
+34.
+SELECT `country`.`Name`, 
+`country`.`IndepYear`
+FROM `country` 
+WHERE `country`.`IndepYear` 
+IS NOT NULL ORDER BY `country`.`IndepYear` ASC LIMIT 10
