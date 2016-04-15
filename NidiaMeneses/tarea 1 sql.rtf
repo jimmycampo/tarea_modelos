@@ -1,0 +1,368 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang9226{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2509;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang10\f0\fs22 Realice una consulta SQL que permita obtener :\par
+\b 1. Los pa\'edses mas grandes del mundo:\par
+\b0 SELECT \par
+  `country`.`Name`,\par
+  `country`.`Population`,\par
+  `country`.`Continent`\par
+FROM\par
+  `country`\par
+ORDER BY\par
+  `country`.`Population` desc\par
+\b 2. Los 10 pa\'edses mas grandes del mundo:\par
+\b0 SELECT \par
+  `country`.`Name`,\par
+  `country`.`Population`,\par
+  `country`.`Continent`\par
+FROM\par
+  `country`\par
+ORDER BY\par
+  `country`.`Population` desc\par
+LIMIT 10\par
+\b 3. Los 10 pa\'edses mas ricos del mundo\par
+\b0 SELECT \par
+  `country`.`Name`,\par
+  `country`.`Population`,\par
+  `country`.`Continent`,\par
+  `country`.`GNP`\par
+FROM\par
+  `country`\par
+ORDER BY\par
+  `country`.`GNP` desc\par
+LIMIT 10\par
+\b 4. Los 10 pa\'edses m\'e1s ricos con el PIB per C\'e1pita:\par
+\b0 SELECT \par
+  `country`.`Name`,\par
+  `country`.`Population`,\par
+  `country`.`Continent`,\par
+  `country`.`GNP`,\par
+  `country`.`GNPold`\par
+FROM\par
+  `country`\par
+ORDER BY\par
+  `country`.`GNP` desc\par
+LIMIT 10\par
+\b 5. Los 5 pa\'edses con mayor expectativa de vida:\par
+\b0 SELECT \par
+  `country`.`Continent`,\par
+  `country`.`Name`,\par
+  `country`.`LifeExpectancy`\par
+FROM\par
+  `country`\par
+ORDER BY\par
+  `country`.`LifeExpectancy` desc\par
+LIMIT 5\par
+\b 6. El PIB de cada continente:\b0\par
+SELECT \par
+  `country`.`Continent`,\par
+  SUM(`country`.`Population`) AS `Poblacion`\par
+FROM\par
+  `country`\par
+GROUP BY\par
+  `country`.`Continent`\par
+ORDER BY  2 DESC\par
+\b 7. Los 10 pa\'edses m\'e1s peque\'f1os del mundo:\par
+\b0 SELECT \par
+  `country`.`Name`,\par
+  `country`.`Population`,\par
+  `country`.`Continent`\par
+FROM\par
+  `country`\par
+ORDER BY\par
+  `country`.`Population`\par
+LIMIT 10\par
+\b 8. Los pa\'edses mas grandes del mundo con nombre de 6 letras:\par
+\b0 SELECT \par
+  `country`.`Name`,\par
+  `country`.`Population`,\par
+  `country`.`Continent`\par
+FROM\par
+  `country`\par
+WHERE\par
+  `country`.`Name` LIKE '------'\par
+ORDER BY\par
+  `country`.`Population` desc\par
+LIMIT 10\par
+\b 9. El pa\'eds m\'e1s rico en cada continente:\b0\par
+SELECT distinct\par
+  country.Continent,\par
+  MAX(country.gnp),\par
+  country.name\par
+  FROM\par
+  country\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\par
+\b 10. El pa\'eds mas pobre de cada continente\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  MIN(country.gnp),\par
+  country.name\par
+  FROM\par
+  country\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\b\par
+11. El pa\'eds m\'e1s chico de cada continente\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  MAX(country.population),\par
+  country.name\par
+  FROM\par
+  country\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\par
+\b 12. El pa\'eds m\'e1s grande de cada continente\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  MIN(country.population),\par
+  country.name\par
+  FROM\par
+  country\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\par
+\b 13. Los pa\'edses con mejor expectativa de vida independizados en el siglo 20\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  MAX(country.`LifeExpectancy`),\par
+  country.name\par
+  FROM\par
+  country\par
+  WHERE\par
+  country.`IndepYear` BETWEEN 1901 AND 2000\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\b\par
+14. Los pa\'edses con peor expectativa de vida independizados en el siglo 20\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  MIN(country.`LifeExpectancy`),\par
+  country.name\par
+  FROM\par
+  country\par
+  WHERE\par
+  country.`IndepYear` BETWEEN 1901 AND 2000\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\b\par
+15. Los pa\'edses con mejor expectativa de vida sin independizarse aun\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  MAX(country.`LifeExpectancy`),\par
+  country.name,\par
+  country.`IndepYear`\par
+  FROM\par
+  country\par
+  WHERE\par
+  country.`IndepYear` IS NULL\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\b\par
+16. Los pa\'edses, no americanos, con mejor expectativa de vida\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  MAX(country.`LifeExpectancy`),\par
+  country.name\par
+    FROM\par
+  country\par
+  WHERE\par
+  country.continent not like '%America%'\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  country.continent\b\par
+17. Los pa\'edses que se independizaron en el siglo 20\b0\par
+SELECT \par
+  country.name,\par
+  country.indepyear\par
+FROM\par
+  country\par
+WHERE\par
+   country.indepyear BETWEEN 1900 AND 1999\par
+ORDER BY\par
+   country.indepyear\par
+\b 18. Los pa\'edses m\'e1s ricos independizados en el siglo 20\par
+\b0 SELECT \par
+  country.name,\par
+  country.indepyear,\par
+  country.gnp\par
+FROM\par
+  country\par
+WHERE\par
+   country.indepyear BETWEEN 1900 AND 1999\par
+ORDER BY\par
+   country.gnp desc\par
+\b 19. Los pa\'edses que se independizaron antes de Cristo\par
+\b0 SELECT \par
+  country.name,\par
+  country.indepyear\par
+FROM\par
+  country\par
+WHERE\par
+   country.indepyear < 0\par
+ORDER BY\par
+   country.indepyear desc\par
+\b 20. Los pa\'edses que se independizaron en un a\'f1o bisiesto\par
+\par
+21. Todos los pa\'edses y la cantidad de a\'f1os que han transcurrido desde que se independizaron\par
+\b0 SELECT \par
+  country.name,\par
+  country.indepyear,\par
+  (year(now()) -country.indepyear) LIBRES\par
+FROM\par
+  country\par
+ORDER BY\par
+   country.indepyear\par
+\b 22. Los pa\'edses que se independizaron despu\'e9s de Colombia\par
+\b0 SELECT \par
+  country.name,\par
+  country.indepyear\par
+FROM\par
+  country\par
+WHERE  \par
+  country.indepyear> 1810\par
+ORDER BY\par
+   country.indepyear\par
+\b 23. Los pa\'edses que no se han independizado aun (no reportan fecha de independencia)\par
+\b0 SELECT \par
+  country.name,\par
+  country.indepyear\par
+FROM\par
+  country\par
+WHERE  \par
+  country.indepyear is NULL\par
+ORDER BY\par
+   country.name\par
+\b 24. El primer pa\'eds que se independiz\'f3\par
+\b0 SELECT country.name, country.indepyear\par
+FROM `country`\par
+WHERE \par
+country.indepyear is not NULL\par
+ORDER BY\par
+country.indepyear\par
+LIMIT 1\par
+\b 25. El \'faltimo pa\'eds que se independiz\'f3\par
+\b0 SELECT country.name, country.indepyear\par
+FROM `country`\par
+WHERE \par
+country.indepyear is not NULL\par
+ORDER BY\par
+country.indepyear DESC\par
+LIMIT 1\par
+\b 26. El continente con mas independencias en el siglo 20\par
+\b0 SELECT distinct\par
+  country.Continent,\par
+  COUNT(country.`Code`) as cantidad\par
+    FROM\par
+  country\par
+  WHERE\par
+  country.`IndepYear` BETWEEN 1901 AND 2000\par
+  GROUP BY\par
+  country.continent\par
+ORDER BY\par
+  2 DESC\par
+LIMIT 1\b\par
+27. El primer pa\'eds en independizarse en cada continente\par
+\par
+28. El \'faltimo pa\'eds en independizarse en cada continente\par
+29. El continente con mas independencias en el siglo 20\par
+30. El continente con mas pa\'edses sin independizarse aun\par
+31. El mejor pa\'eds del mundo\par
+\par
+32. La expectativa de vida promedio de \'c1frica\par
+\par
+33. La fecha promedio de la independencia de los pa\'edses en Am\'e9rica del Sur\par
+\par
+34. Los primeros 10 pa\'edses en independizarse\b0\par
+SELECT \par
+  country.name,\par
+  country.indepyear\par
+FROM\par
+  country\par
+WHERE  \par
+  country.indepyear is not NULL\par
+ORDER BY\par
+   country.indepyear\par
+LIMIT 10\par
+\b 35. La expectativa de vida promedio de cada continente\par
+\par
+36. La expectativa de vida promedio de cada continente con la diferencia en a\'f1os respecto a la mayor expectativa\par
+\par
+37. Cada continente con la cantidad de pa\'edses que posee ordenados de mayor a menor\par
+\par
+38. Cada continente con el porcentaje de poblaci\'f3n del mundo que le corresponde\par
+\par
+39. El tama\'f1o de cada continente ordenados de mayor a menor\b0\par
+SELECT\par
+  country.continent,\par
+  SUM(country.population) AS POBLACION\par
+FROM\par
+  country\par
+GROUP BY\par
+  country.continent\par
+ORDER BY\par
+   2  DESC\par
+\b 40. Todos los pa\'edses con sus capitales (si no tiene mostrar "no registra")\par
+\b0 SELECT\par
+  country.name PAIS,\par
+  if(country.capital is not NULL, city.name, 'NO REGISTRA') AS CAPITAL\par
+FROM\par
+  country\par
+INNER JOIN city ON\par
+(city.id = country.capital)\par
+ORDER BY\par
+   country.name\par
+\b 41. Los pa\'edses cuya capital tenga una poblaci\'f3n de mas de 1 mill\'f3n de habitantes\par
+\b0 SELECT\par
+  country.name PAIS,\par
+  if(country.capital is not NULL, city.name, 'NO REGISTRA') AS CAPITAL,\par
+  city.population\par
+FROM\par
+  country\par
+INNER JOIN city ON\par
+(city.id = country.capital)\par
+WHERE\par
+city.population > 1000000\par
+ORDER BY\par
+   country.name\par
+\b 42. Los pa\'edses donde se hable m\'e1s de 2 idiomas oficiales\par
+\par
+43. Los 5 idiomas m\'e1s hablados en el mundo\par
+\par
+44. Las ciudades sin capital\par
+\par
+45. Las ciudades capitales donde se hablen mas de 2 idiomas\par
+\par
+46. Las ciudades mas pobladas de \'c1frica y Europa\par
+\par
+47. La ciudad m\'e1s poblada del mundo y la menos poblada del mundo\par
+\par
+48. La poblaci\'f3n sumada de toda sur-am\'e9rica excepto brasil y adem\'e1s, la poblaci\'f3n de brasil\par
+\par
+49. Todas los pa\'edses con sus capitales y los idiomas que hablan ordenados alfab\'e9ticamente\par
+\par
+50. Todas los pa\'edses con sus capitales y la cantidad de idiomas que hablan\par
+\par
+51. Todos los pa\'edses donde el ingles es el idioma oficial \b0\par
+SELECT\par
+countrylanguage.countrycode,countrylanguage.language,countrylanguage.isofficial\par
+FROM\par
+countrylanguage\par
+INNER JOIN country ON\par
+(countrylanguage.countrycode=country.code)\par
+WHERE\par
+countrylanguage.isofficial = 'T'\par
+ORDER BY\par
+country.name\par
+\par
+}
+ 
