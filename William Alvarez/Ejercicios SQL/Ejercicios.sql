@@ -343,12 +343,29 @@ FROM   (SELECT  c.`Continent`,
 
 #	27	El primer país en independizarse en cada continente
 
+SELECT 
+  `country`.`Name`,
+  `country`.`Continent`,
+  `country`.`INDEPYEAR`
+FROM
+  `country`
+WHERE
+  `country`.`INDEPYEAR` = (SELECT MIN(`c`.`INDEPYEAR`) AS `FIELD_1` FROM `country` `c` WHERE `c`.`Continent` = `country`.`Continent`)
+ORDER BY 3 
+
 
 
 #	28	El último país en independizarse en cada continente
 
-
-
+SELECT 
+  `country`.`Name`,
+  `country`.`Continent`,
+  `country`.`INDEPYEAR`
+FROM
+  `country`
+WHERE
+  `country`.`INDEPYEAR` = (SELECT MAX(`c`.`INDEPYEAR`) AS `FIELD_1` FROM `country` `c` WHERE `c`.`Continent` = `country`.`Continent`)
+ORDER BY 3 
 
 #	29	El continente con mas independencias en el siglo 20
 
